@@ -1,0 +1,10 @@
+.idea/
+venv/
+__pycache__/
+*/__pycache__/
+*/migrations/0*
+.env
+static/
+staticfiles/
+db.sqlite3
+```
