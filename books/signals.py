@@ -9,6 +9,6 @@ def update_book_rating(sender, instance, created, **kwargs):
     if created:
         book = instance.book
         current_rating = book.average_rating
-        new_rating = (current_rating + instance.rating)/2
+        new_rating = (current_rating + instance.rating) / 2
         book.average_rating = new_rating
         book.save()

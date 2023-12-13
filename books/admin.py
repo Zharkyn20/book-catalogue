@@ -12,20 +12,20 @@ class InlineRating(admin.TabularInline):
 class BookAdmin(admin.ModelAdmin):
     inlines = [InlineRating]
 
-    list_display = ['id', 'title', 'author']
-    list_display_links = ['id', 'title', 'author']
-    readonly_fields = ['slug', 'average_rating']
+    list_display = ["id", "title", "author"]
+    list_display_links = ["id", "title", "author"]
+    readonly_fields = ["slug", "average_rating"]
 
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = "__all__"
 
 
 @admin.register(Genre)
 class GenreAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
-    list_display_links = ['id', 'name']
+    list_display = ["id", "name"]
+    list_display_links = ["id", "name"]
 
     class Meta:
         model = Genre
-        fields = '__all__'
+        fields = "__all__"

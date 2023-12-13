@@ -13,9 +13,9 @@ class InlineFavorite(admin.TabularInline):
 class CustomUserAdmin(admin.ModelAdmin):
     inlines = [InlineFavorite]
 
-    list_display = ['id', 'full_name', 'email']
-    list_display_links = ['id', 'full_name', 'email']
+    list_display = ["id", "full_name", "email"]
+    list_display_links = ["id", "full_name", "email"]
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'full_name', 'email', 'password', 'is_superuser', 'is_active')
+        fields = ("id", "full_name", "email", "password", "is_superuser", "is_active")
