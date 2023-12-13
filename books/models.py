@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.text import slugify
 
 from tinymce.models import HTMLField
 from users.models import CustomUser
@@ -22,10 +23,11 @@ class Book(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Автор')
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE, verbose_name='Жанр')
 
+    slug = models.SlugField(max_length=100, verbose_name='Слаг', blank=True, null=True)
     title = models.CharField(max_length=100, verbose_name='Название')
     file = models.FileField(upload_to='books/', verbose_name='Файл книги')
-    published = models.DateField(verbose_name='Дата публикации')
-    average_rating = models.FloatField(verbose_name='Рейтинг')
+    published_date = models.DateField(verbose_name='Дата публикации')
+    average_rating = models.FloatField(verbose_name='Рейтинг', blank=True, null=True)
     description = HTMLField(verbose_name='Описание')
 
     class Meta:
@@ -35,10 +37,15 @@ class Book(models.Model):
     def __str__(self):
         return self.title
 
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
 
 class Rating(models.Model):
     """Рейтинг"""
-    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Книга')
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='Книга', related_name='ratings')
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, verbose_name='Пользователь')
     rating = models.IntegerField(choices=RATING_CHOICES, verbose_name='Рейтинг')
     comment = models.TextField(verbose_name='Комментарий')
